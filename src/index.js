@@ -1,17 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "./routes";
 import { BrowserRouter as Router } from "react-router-dom";
 import TopBar from "./components/topBar";
+import { CurrentUserProvider } from "./contexts/currentUser";
 
 const App = () => {
   return (
-    <Fragment>
+    <CurrentUserProvider>
       <Router>
         <TopBar />
         <Routes />
       </Router>
-    </Fragment>
+    </CurrentUserProvider>
   );
 };
 
