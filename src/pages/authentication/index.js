@@ -1,37 +1,76 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { CurrentUserContext } from "../../contexts/currentUser";
+import BackendErrorMessages from "./components/backendErrorMessages";
 
-const Authentication = () => {
+const Authentication = ({ match }) => {
+  const isLogin = match.path === "/login";
+  const pageTitle = isLogin ? "Sign In" : "Sign Up";
+  const descriptionLink = isLogin ? "/register" : "/login";
+  const descriptionText = isLogin ? "Need an accout?" : "Have an account?";
+  const apiUrl = isLogin ? "/users/login" : "users";
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [{ isLoading, error }, doFetch] = useFetch("users/login");
+  const [isSuccessFullSubmit, setIsSuccessFullSubmit] = useState("");
+  const [{ isLoading, error, response }, doFetch] = useFetch(apiUrl, match);
+  const [, setToken] = useLocalStorage("token");
+  const [, setCurrentUserState] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    const user = isLogin ? { email, password } : { email, password, username };
     doFetch({
       method: "post",
       data: {
-        user: {
-          email,
-          password,
-        },
+        user,
       },
     });
   };
+
+  useEffect(() => {
+    if (!response) {
+      return;
+    }
+    setToken(response.user.token);
+    setIsSuccessFullSubmit(true);
+    setCurrentUserState((state) => ({
+      ...state,
+      isLoggedIn: true,
+      isLoading: false,
+      currentUser: response.user,
+    }));
+  }, [response, setToken, setCurrentUserState]);
+
+  if (isSuccessFullSubmit) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="auth-page">
       <div className="container page">
         <div className="row">
           <div className="col-xs-12 col-md-6 offset-md-3">
-            <h1 className="text-xs-center">Login</h1>
+            <h1 className="text-xs-center">{pageTitle}</h1>
             <p className="text-xs-center">
-              <Link to="/register">Need an account?</Link>
+              <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
+              {error && <BackendErrorMessages backendError={error.errors} />}
               <fieldset>
+                {!isLogin && (
+                  <fieldset className="form-group">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(event) => setUserName(event.target.value)}
+                    />
+                  </fieldset>
+                )}
                 <fieldset className="form-group">
                   <input
                     type="email"
@@ -54,10 +93,9 @@ const Authentication = () => {
                   className="btn btn-lg btn-primary pull-xs-right"
                   disabled={isLoading}
                 >
-                  Sign in
+                  {pageTitle}
                 </button>
               </fieldset>
-              {error && <p>Password or Login incorrected</p>}
             </form>
           </div>
         </div>
