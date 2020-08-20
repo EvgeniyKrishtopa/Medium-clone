@@ -1,12 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-export default (url) => {
+export default (url, { path }) => {
   const baseUrl = "https://conduit.productionready.io/api/";
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [options, setOptions] = useState({});
+
+  const prevPathRef = useRef();
+
+  useEffect(() => {
+    prevPathRef.current = path;
+  }, [path]);
+
+  const prevPath = prevPathRef.current;
 
   const doFetch = (options = {}) => {
     setOptions(options);
@@ -25,9 +33,16 @@ export default (url) => {
       })
       .catch((err) => {
         setIsLoading(false);
+
         setError(err.response.data);
       });
-  }, [isLoading, options, url]);
+  }, [isLoading, options, url, path]);
+
+  useEffect(() => {
+    if (path !== prevPath) {
+      setError(null);
+    }
+  }, [path, prevPath]);
 
   return [{ isLoading, response, error }, doFetch];
 };
