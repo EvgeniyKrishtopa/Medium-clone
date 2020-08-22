@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useLocalStorage from "./useLocalStorage";
 import axios from "axios";
 
 export default (url, { path }) => {
@@ -7,6 +8,7 @@ export default (url, { path }) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [options, setOptions] = useState({});
+  const [token] = useLocalStorage("token");
 
   const prevPathRef = useRef();
 
@@ -16,17 +18,26 @@ export default (url, { path }) => {
 
   const prevPath = prevPathRef.current;
 
-  const doFetch = (options = {}) => {
+  const doFetch = useCallback((options = {}) => {
     setOptions(options);
     setIsLoading(true);
-  };
+  }, []);
 
   useEffect(() => {
+    const requestOptions = {
+      ...options,
+      ...{
+        headers: {
+          authorization: token ? `Token ${token}` : "",
+        },
+      },
+    };
+
     if (!isLoading) {
       return;
     }
 
-    axios(baseUrl + url, options)
+    axios(baseUrl + url, requestOptions)
       .then((res) => {
         setIsLoading(false);
         setResponse(res.data);
@@ -36,7 +47,7 @@ export default (url, { path }) => {
 
         setError(err.response.data);
       });
-  }, [isLoading, options, url, path]);
+  }, [isLoading, options, url, path, token]);
 
   useEffect(() => {
     if (path !== prevPath) {
