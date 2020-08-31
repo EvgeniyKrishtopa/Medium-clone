@@ -1,41 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//I should do here destructuring article
 
 const Feed = ({ articles }) => {
-  console.log(articles);
   return (
     <>
-      {articles.map((article, index) => (
-        <div className="article-preview" key={index}>
-          <div className="article-meta">
-            <Link to={`/profiles/${article.author.username}`}>
-              <img src={article.author.image} alt="" />
-            </Link>
-            <div className="info">
-              <Link
-                to={`/profiles/${article.author.username}`}
-                className="author"
-              >
-                {article.author.username}
+      {articles.map(
+        ({ author, createdAt, slug, title, description, tagList }, index) => (
+          <div className="article-preview" key={index}>
+            <div className="article-meta">
+              <Link to={`/profiles/${author.username}`}>
+                <img src={author.image} alt="" />
               </Link>
-              <span className="date">{article.createdAt}</span>
+              <div className="info">
+                <Link to={`/profiles/${author.username}`} className="author">
+                  {author.username}
+                </Link>
+                <span className="date">{createdAt}</span>
+              </div>
             </div>
+            <Link to={`/articles/${slug}`} className="preview-link">
+              <h1>{title}</h1>
+              <p>{description}</p>
+              <span>Read more...</span>
+              <ul className="tag-list">
+                {tagList.map((tag) => (
+                  <li key={tag} className="tag-default tag-pill tag-outline">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </Link>
           </div>
-          <Link to={`/articles/${article.slug}`} className="preview-link">
-            <h1>{article.title}</h1>
-            <p>{article.description}</p>
-            <span>Read more...</span>
-            <ul className="tag-list">
-              {article.tagList.map((tag) => (
-                <li key={tag} className="tag-default tag-pill tag-outline">
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          </Link>
-        </div>
-      ))}
+        )
+      )}
     </>
   );
 };
