@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import Feed from "../../components/feed";
 import Pagination from "../../components/pagination";
+import PopularTags from "../../components/popularTags";
+import Loading from "../../components/loading";
+import Error from "../../components/error";
 import { limit, getPaginator } from "../../utils";
 
 const GlobalFeed = ({ location, match }) => {
@@ -24,8 +27,8 @@ const GlobalFeed = ({ location, match }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Some error happened!</p>}
+            {isLoading && <Loading />}
+            {error && <Error />}
             {!isLoading && response && (
               <>
                 <Feed articles={response.articles} />
@@ -38,7 +41,9 @@ const GlobalFeed = ({ location, match }) => {
               </>
             )}
           </div>
-          <div className="col-md-3">Popular tags</div>
+          <div className="col-md-3">
+            <PopularTags />
+          </div>
         </div>
       </div>
     </div>
