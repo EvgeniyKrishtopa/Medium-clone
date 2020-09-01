@@ -17,7 +17,7 @@ const Authentication = ({ match }) => {
   const [isSuccessFullSubmit, setIsSuccessFullSubmit] = useState("");
   const [{ isLoading, error, response }, doFetch] = useFetch(apiUrl, match);
   const [, setToken] = useLocalStorage("token");
-  const [, setCurrentUserState] = useContext(CurrentUserContext);
+  const [, dispatch] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,13 +36,9 @@ const Authentication = ({ match }) => {
     }
     setToken(response.user.token);
     setIsSuccessFullSubmit(true);
-    setCurrentUserState((state) => ({
-      ...state,
-      isLoggedIn: true,
-      isLoading: false,
-      currentUser: response.user,
-    }));
-  }, [response, setToken, setCurrentUserState]);
+
+    dispatch({ type: "SET_AUTHORIZED", payload: response.user });
+  }, [response, setToken, dispatch]);
 
   if (isSuccessFullSubmit) {
     return <Redirect to="/" />;
