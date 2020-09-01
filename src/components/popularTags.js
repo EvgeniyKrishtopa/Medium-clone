@@ -26,7 +26,7 @@ const PopularTags = () => {
         {!isLoading &&
           response &&
           response.tags.map((tag) => (
-            <Link to={`tags/${tag}`} className="tag-default tag-pill" key={tag}>
+            <Link to={`${tag}`} className="tag-default tag-pill" key={tag}>
               {tag}
             </Link>
           ))}
