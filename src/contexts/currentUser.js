@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 const initialState = {
   isLoading: false,
-  isLoggedIn: null,
+  isLoggedIn: false,
   currentUser: null,
 };
 

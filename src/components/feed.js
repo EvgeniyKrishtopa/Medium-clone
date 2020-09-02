@@ -21,7 +21,7 @@ const Feed = ({ articles }) => {
             </div>
             <Link to={`/articles/${slug}`} className="preview-link">
               <h1>{title}</h1>
-              <p>{description}</p>
+              <p style={{ overflowWrap: "break-word" }}>{description}</p>
               <span>Read more...</span>
               <TagList tags={tagList} />
             </Link>
