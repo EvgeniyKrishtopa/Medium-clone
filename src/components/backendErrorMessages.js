@@ -12,7 +12,6 @@ const ErrosList = (...errorMessages) => {
 
 const BackendErrorMessages = ({ backendError }) => {
   const errorKeys = Object.keys(backendError);
-
   const messages = errorKeys.map((name) => {
     const message = backendError[name].join("");
     return `${name} ${message}`;
