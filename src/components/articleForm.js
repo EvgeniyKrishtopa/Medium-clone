@@ -29,7 +29,7 @@ const ArticleFrom = ({ onSubmit, errors, initialValues }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            {errors && <BackendErrorMessages backendError={errors.errors} />}
+            {errors && <BackendErrorMessages backendError={errors} />}
             <form onSubmit={handleSubmit}>
               <fieldset>
                 <fieldset className="form-group">

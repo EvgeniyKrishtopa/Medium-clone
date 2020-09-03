@@ -60,7 +60,7 @@ const EditArticle = ({ match }) => {
   return (
     <ArticleFrom
       onSubmit={handleSubmit}
-      errors={(updateArticleError && updateArticleError.errors) || null}
+      errors={(updateArticleError && updateArticleError.errors) || {}}
       initialValues={initialValues}
     />
   );

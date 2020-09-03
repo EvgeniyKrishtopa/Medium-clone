@@ -46,7 +46,7 @@ const CreateArticle = () => {
 
   return (
     <ArticleFrom
-      errors={(error && error.errors) || null}
+      errors={(error && error.errors) || {}}
       initialValues={initialValues}
       onSubmit={handleSubmit}
     />
