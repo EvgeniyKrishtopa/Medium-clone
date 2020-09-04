@@ -14,6 +14,11 @@ const reducer = (state, action) => {
       return { ...state, isLoggedIn: true, currentUser: action.payload };
     case "SET_UNAUTHORIZED":
       return { ...state, isLoggedIn: false };
+    case "LOGOUT":
+      return {
+        ...initialState,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import CreateArticle from "./pages/createArticle";
 import EditArticle from "./pages/editArticle";
 import { Switch, Route } from "react-router-dom";
 import Authentication from "./pages/authentication";
+import SettingsPage from "./pages/settings";
 
 export default () => {
   return (
@@ -19,6 +20,7 @@ export default () => {
       <Route path="/tags/:slug" component={TagFeed} />
       <Route path="/login" component={Authentication} />
       <Route path="/register" component={Authentication} />
+      <Route path="/settings" component={SettingsPage} />
     </Switch>
   );
 };
