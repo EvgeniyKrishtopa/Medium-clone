@@ -1,12 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TagList from "./tagList";
+import AddToFavorites from "./addToFavorites";
 
 const Feed = ({ articles }) => {
   return (
     <>
       {articles.map(
-        ({ author, createdAt, slug, title, description, tagList }, index) => (
+        (
+          {
+            author,
+            createdAt,
+            title,
+            description,
+            tagList,
+            favorited,
+            favoritesCount,
+            slug,
+          },
+          index
+        ) => (
           <div className="article-preview" key={index}>
             <div className="article-meta">
               <Link to={`/profiles/${author.username}`}>
@@ -17,6 +30,13 @@ const Feed = ({ articles }) => {
                   {author.username}
                 </Link>
                 <span className="date">{createdAt}</span>
+              </div>
+              <div className="pull-xs-right">
+                <AddToFavorites
+                  isFavorited={favorited}
+                  isFavoritesCount={favoritesCount}
+                  isArticleSlug={slug}
+                />
               </div>
             </div>
             <Link to={`/articles/${slug}`} className="preview-link">
