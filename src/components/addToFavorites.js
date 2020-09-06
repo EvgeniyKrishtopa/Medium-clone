@@ -13,7 +13,7 @@ const AddToFavorites = ({ isFavorited, isFavoritesCount, isArticleSlug }) => {
     : isFavorited;
 
   const buttonClasses = classNames({
-    btn: true,
+    "btn": true,
     "btn-sm": true,
     "btn-primary": isFavoritedWithResponse,
     "btn-outline-primary": !isFavoritedWithResponse,
