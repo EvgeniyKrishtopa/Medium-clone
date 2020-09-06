@@ -8,6 +8,7 @@ import EditArticle from "./pages/editArticle";
 import { Switch, Route } from "react-router-dom";
 import Authentication from "./pages/authentication";
 import SettingsPage from "./pages/settings";
+import UserProfile from "./pages/userProfile";
 
 export default () => {
   return (
@@ -21,6 +22,8 @@ export default () => {
       <Route path="/login" component={Authentication} />
       <Route path="/register" component={Authentication} />
       <Route path="/settings" component={SettingsPage} />
+      <Route path="/profiles/:slug" component={UserProfile} />
+      <Route path="/profiles/:slug/favorites" component={UserProfile} />
     </Switch>
   );
 };

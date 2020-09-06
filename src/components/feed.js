@@ -4,6 +4,10 @@ import TagList from "./tagList";
 import AddToFavorites from "./addToFavorites";
 
 const Feed = ({ articles }) => {
+  if (!articles) {
+    return;
+  }
+
   return (
     <>
       {articles.map(
@@ -23,7 +27,10 @@ const Feed = ({ articles }) => {
           <div className="article-preview" key={index}>
             <div className="article-meta">
               <Link to={`/profiles/${author.username}`}>
-                <img src={author.image} alt="" />
+                <img
+                  src="https://static.productionready.io/images/smiley-cyrus.jpg"
+                  alt=""
+                />
               </Link>
               <div className="info">
                 <Link to={`/profiles/${author.username}`} className="author">
