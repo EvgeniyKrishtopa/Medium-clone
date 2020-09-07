@@ -14,7 +14,7 @@ const CreateArticle = () => {
     title: "",
     description: "",
     body: "",
-    tagList: [""],
+    tagList: [],
   };
 
   const handleSubmit = (article) => {
