@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import TagList from "./tagList";
 import AddToFavorites from "./addToFavorites";
+import { dataFormatToggled } from "../utils";
 
 const Feed = ({ articles }) => {
   if (!articles) {
@@ -36,7 +37,7 @@ const Feed = ({ articles }) => {
                 <Link to={`/profiles/${author.username}`} className="author">
                   {author.username}
                 </Link>
-                <span className="date">{createdAt}</span>
+                <span className="date">{dataFormatToggled(createdAt)}</span>
               </div>
               <div className="pull-xs-right">
                 <AddToFavorites

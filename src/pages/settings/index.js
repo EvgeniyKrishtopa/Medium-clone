@@ -93,7 +93,7 @@ const SettingsPage = () => {
                     className="form-control form-control-lg"
                     rows="9"
                     placeholder="Short bio"
-                    value={bio}
+                    value={bio || "bio"}
                     onChange={(e) => setBio(e.target.value)}
                   ></textarea>
                 </fieldset>

@@ -18,6 +18,7 @@ const CreateArticle = () => {
   };
 
   const handleSubmit = (article) => {
+    article.tagList = article.tagList.split(" ");
     doFetch({
       method: "post",
       data: {

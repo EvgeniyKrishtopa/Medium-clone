@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import useFetch from "../../hooks/useFetch";
 import Feed from "../../components/feed";
 import PopularTags from "../../components/popularTags";
@@ -7,34 +7,44 @@ import Error from "../../components/error";
 import FeedToggler from "../../components/feedToggler";
 import { limit, getPaginator } from "../../utils";
 import { CurrentUserContext } from "../../contexts/currentUser";
+import Pagination from "../../components/pagination";
 
-const CurrentUserArticlesInfo = ({ currentUserArticles }) => {
-  if (currentUserArticles.length) {
-    return <Feed articles={currentUserArticles} />;
+const CurrentUserArticlesInfo = ({
+  articles,
+  total,
+  limit,
+  url,
+  currentPage,
+}) => {
+  if (articles.length) {
+    return (
+      <>
+        <Feed articles={articles} />
+        <Pagination
+          total={total}
+          limit={limit}
+          url={url}
+          currentPage={currentPage}
+        />
+      </>
+    );
   }
   return <p>No articles are here... yet.</p>;
 };
 
-const YourFeed = ({ location }) => {
+const YourFeed = ({ location, match }) => {
   const { offset, currentPage } = getPaginator(location.search);
-  const apiUrl = `articles?limit=${limit}&offset=${offset}`;
-  const [currentUserArticles, setCurrentUserArticles] = useState([]);
-  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl, {});
   const [{ currentUser }] = useContext(CurrentUserContext);
+  const apiUrl =
+    currentUser &&
+    `articles?author=${currentUser.username}&limit=${limit}&offset=${offset}`;
+  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl, {});
 
   useEffect(() => {
-    doFetch();
-  }, [doFetch, currentPage]);
-
-  useEffect(() => {
-    if (response && currentUser) {
-      const filteredArticles = response.articles.filter((item) => {
-        return item.author.username === currentUser.username;
-      });
-
-      setCurrentUserArticles(filteredArticles);
+    if (apiUrl) {
+      doFetch();
     }
-  }, [response, currentUser]);
+  }, [doFetch, currentPage, apiUrl]);
 
   return (
     <div className="home-page">
@@ -52,7 +62,11 @@ const YourFeed = ({ location }) => {
             {error && <Error />}
             {!isLoading && response && (
               <CurrentUserArticlesInfo
-                currentUserArticles={currentUserArticles}
+                articles={response.articles}
+                limit={limit}
+                currentPage={currentPage}
+                total={response.articlesCount}
+                url={match.url}
               />
             )}
           </div>
