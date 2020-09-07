@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import Loading from "./loading";
 import Error from "./error";
@@ -6,10 +6,20 @@ import { Link } from "react-router-dom";
 
 const PopularTags = () => {
   const [{ response, isLoading, error }, doFetch] = useFetch("tags", {});
+  const [filteredTags, setFilteredTags] = useState([]);
 
   useEffect(() => {
     doFetch();
   }, [doFetch]);
+
+  useEffect(() => {
+    if (response) {
+      const tags = response.tags
+        .map((tag) => tag.replace(/\u200c/g, ""))
+        .filter((tag) => tag.length !== 0);
+      setFilteredTags(tags);
+    }
+  }, [response]);
 
   if (isLoading) {
     return <Loading />;
@@ -25,11 +35,12 @@ const PopularTags = () => {
       <div className="tag-list">
         {!isLoading &&
           response &&
-          response.tags.map((tag) => (
+          filteredTags &&
+          filteredTags.map((tag, index) => (
             <Link
               to={`/tags/${tag}`}
               className="tag-default tag-pill"
-              key={tag}
+              key={index}
             >
               {tag}
             </Link>

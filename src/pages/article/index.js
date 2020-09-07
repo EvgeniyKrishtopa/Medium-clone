@@ -9,7 +9,7 @@ import { Redirect } from "react-router-dom";
 
 const Article = (props) => {
   const slug = props.match.params.slug;
-  const apiUrl = `/articles/${slug}`;
+  const apiUrl = `articles/${slug}`;
   const [isSuccessfullDelete, setIsSuccesfullDelete] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl, {});
   const [{ response: deleteArticleResponse }, doDeleteArticle] = useFetch(
