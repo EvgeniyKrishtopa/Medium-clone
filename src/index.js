@@ -10,7 +10,7 @@ const App = () => {
   return (
     <CurrentUserProvider>
       <CurrentUserChecker>
-        <Router>
+        <Router basename="/Medium-clone">
           <TopBar />
           <Routes />
         </Router>
