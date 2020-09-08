@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/Medium-clone/static/js/main.dbdd501b.chunk.js",
-    "main.js.map": "/Medium-clone/static/js/main.dbdd501b.chunk.js.map",
+    "main.js": "/Medium-clone/static/js/main.f1f5ade5.chunk.js",
+    "main.js.map": "/Medium-clone/static/js/main.f1f5ade5.chunk.js.map",
     "runtime-main.js": "/Medium-clone/static/js/runtime-main.33902bce.js",
     "runtime-main.js.map": "/Medium-clone/static/js/runtime-main.33902bce.js.map",
-    "static/js/2.3ea7ea60.chunk.js": "/Medium-clone/static/js/2.3ea7ea60.chunk.js",
-    "static/js/2.3ea7ea60.chunk.js.map": "/Medium-clone/static/js/2.3ea7ea60.chunk.js.map",
+    "static/js/2.99edb5d0.chunk.js": "/Medium-clone/static/js/2.99edb5d0.chunk.js",
+    "static/js/2.99edb5d0.chunk.js.map": "/Medium-clone/static/js/2.99edb5d0.chunk.js.map",
     "index.html": "/Medium-clone/index.html",
-    "precache-manifest.658430d4faf90980f879c89cbbb6f425.js": "/Medium-clone/precache-manifest.658430d4faf90980f879c89cbbb6f425.js",
+    "precache-manifest.9bb60c5ddb6c99b03a0a897dc98ce203.js": "/Medium-clone/precache-manifest.9bb60c5ddb6c99b03a0a897dc98ce203.js",
     "service-worker.js": "/Medium-clone/service-worker.js",
-    "static/js/2.3ea7ea60.chunk.js.LICENSE.txt": "/Medium-clone/static/js/2.3ea7ea60.chunk.js.LICENSE.txt"
+    "static/js/2.99edb5d0.chunk.js.LICENSE.txt": "/Medium-clone/static/js/2.99edb5d0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.33902bce.js",
-    "static/js/2.3ea7ea60.chunk.js",
-    "static/js/main.dbdd501b.chunk.js"
+    "static/js/2.99edb5d0.chunk.js",
+    "static/js/main.f1f5ade5.chunk.js"
   ]
 }
