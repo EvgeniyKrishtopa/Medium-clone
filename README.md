@@ -1,4 +1,4 @@
-#Medium-clone
+## Medium-clone
 
 This is my Medium version. This project was created with react.js and Conduit API.
 After authorization you can read exist articles and create own articles. 
